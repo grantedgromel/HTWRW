@@ -1,0 +1,38 @@
+{
+  "source": "Vaclav Smil, How the World Really Works (Viking, 2022)",
+  "note": "Structured index of the interactive visualizations built in src/, aligned to the updated Claude Design handoff. Line numbers reference HOW_TH~1.MD in this repo. Figures are the book's stated values; charts are illustrative.",
+  "archetypes": [
+    "scale-comparator",
+    "unit-conversion-analogy",
+    "log-growth-timeline",
+    "risk-ladder",
+    "composition-flow",
+    "myth-buster"
+  ],
+  "visualizations": [
+    { "id": "scale-explorer", "chapter": 0, "title": "Orders-of-magnitude explorer", "archetype": "scale-comparator", "component": "ScaleExplorer", "keyFigures": ["horse 750 W vs jet 100 MW (130,000x)", "shrew→elephant 6 OOM", "wealth 10 OOM"], "sourceLines": "8964-9039", "interaction": "select comparison; endpoints animate on a log span" },
+    { "id": "hero-stats", "chapter": 0, "title": "Hero count-ups", "archetype": "scale-comparator", "component": "Overview", "keyFigures": ["84% fossil", "50% fed by ammonia", "700x energy"], "sourceLines": "144-153, 601-603", "interaction": "count-up on scroll into view" },
+    { "id": "energy-scrubber", "chapter": 1, "title": "How rich in energy is one human being?", "archetype": "unit-conversion-analogy", "component": "EnergyScrubber", "keyFigures": ["0.05->34 GJ/person 1800->2020", "34 GJ ~ 60 phantom workers", "~6 barrels crude"], "sourceLines": "598-614", "interaction": "drag the year 1800-2020; GJ, multiplier, worker army update" },
+    { "id": "energy-mix-slider", "chapter": 1, "title": "Energy mix over 220 years", "archetype": "composition-flow", "component": "EnergyMixSlider", "keyFigures": ["biomass 98%->7%", "fossils 2%->84%"], "sourceLines": "482-551", "interaction": "year scrubber; 100% stacked bar transitions" },
+    { "id": "energy-density", "chapter": 1, "title": "Energy density ladder", "archetype": "scale-comparator", "component": "AnimatedBars", "keyFigures": ["wood 16", "coal 27", "diesel 46 GJ/t"], "sourceLines": "872-873", "interaction": "hover for detail" },
+    { "id": "diesel-beaker", "chapter": 2, "title": "How much diesel is on your plate?", "archetype": "unit-conversion-analogy", "component": "DieselBeaker", "keyFigures": ["baguette 2", "sourdough 17", "chicken 22", "tomato 6", "shrimp 50 tbsp"], "sourceLines": "1989-2199", "interaction": "tap a food; beaker fills with diesel" },
+    { "id": "tomato-journey", "chapter": 2, "title": "Tomato's 3,745 km commute", "archetype": "unit-conversion-analogy", "component": "TomatoJourney", "keyFigures": ["1,120 L diesel / 13 t = 90 ml/kg"], "sourceLines": "2188-2192", "interaction": "scrub the route; diesel accrues" },
+    { "id": "feed-ratio", "chapter": 2, "title": "Feed-conversion ratio", "archetype": "scale-comparator", "component": "FeedRatio", "keyFigures": ["chicken 1.8", "pork 3", "beef 7"], "sourceLines": "2036-2044", "interaction": "grain-in to meat-out blocks" },
+    { "id": "material-pillars", "chapter": 3, "title": "The four pillars", "archetype": "composition-flow", "component": "MaterialPillars", "keyFigures": ["cement 4.5 Gt", "steel 1.8 Gt", "plastics 370 Mt", "ammonia 150 Mt"], "sourceLines": "2811-2849", "interaction": "toggle production<->CO2; click a pillar" },
+    { "id": "cement-shock", "chapter": 3, "title": "China's 2 years vs USA's century", "archetype": "scale-comparator", "component": "CementShock", "keyFigures": ["China 4.4 Gt (2 yr)", "USA 4.56 Gt (100 yr)", "50x pace"], "sourceLines": "3687-3689", "interaction": "block bars grow on scroll (~200 Mt each)" },
+    { "id": "property-comparator", "chapter": 3, "title": "Nothing matches steel", "archetype": "scale-comparator", "component": "PropertyComparator", "keyFigures": ["tensile 7x Al", "hardness 4x Al", "melts 1,425C"], "sourceLines": "3268-3277", "interaction": "switch metric" },
+    { "id": "container-ship", "chapter": 4, "title": "The machine that built globalisation", "archetype": "log-growth-timeline", "component": "ContainerShip", "keyFigures": ["226 (1957) -> 23,756 TEU (2019)"], "sourceLines": "4439-4762", "interaction": "slide ship eras; vessel scales with capacity" },
+    { "id": "concentration", "chapter": 4, "title": "Supplier concentration", "archetype": "composition-flow", "component": "AnimatedBars", "keyFigures": ["gloves 70%", "rare earths 60%", "TSMC 54%", "CN steel 56%"], "sourceLines": "5023-5027", "interaction": "hover bars" },
+    { "id": "moore", "chapter": 4, "title": "Moore's Law", "archetype": "log-growth-timeline", "component": "LineChart", "keyFigures": ["2,300 (1971) -> 39.5 B (2019); 17.1 bn x"], "sourceLines": "4809-4835", "interaction": "log/linear toggle" },
+    { "id": "risk-ladder", "chapter": 5, "title": "What we fear vs what kills us", "archetype": "risk-ladder", "component": "RiskLadder", "keyFigures": ["base-jump 4e-2", "driving 5e-7", "flying 2.8e-8", "terrorism US 6e-11"], "sourceLines": "5712-6018", "interaction": "toggle fear-ranking vs danger-ranking; rows reorder" },
+    { "id": "mortality", "chapter": 5, "title": "Fear vs. fact mortality", "archetype": "scale-comparator", "component": "AnimatedBars", "keyFigures": ["heart 1,700/M", "terrorism 0.03/M"], "sourceLines": "CDC/WHO", "interaction": "hover bars" },
+    { "id": "diet", "chapter": 5, "title": "US vs Japan diet gap", "archetype": "scale-comparator", "component": "AnimatedBars", "keyFigures": ["fat +45%", "sugar +70%"], "sourceLines": "5225-5238", "interaction": "hover bars" },
+    { "id": "co2-curve", "chapter": 6, "title": "Two centuries of carbon, in one line", "archetype": "log-growth-timeline", "component": "CO2Curve", "keyFigures": ["278 (1750) -> 420 ppm (2020)", "fossil share 86%->84%"], "sourceLines": "6905-7060", "interaction": "tap a milestone to read ppm + note" },
+    { "id": "ghg-potency", "chapter": 6, "title": "Greenhouse-gas potency", "archetype": "scale-comparator", "component": "AnimatedBars", "keyFigures": ["CH4 30x", "N2O 280x"], "sourceLines": "6919-6937", "interaction": "hover bars" },
+    { "id": "decarbonisation", "chapter": 6, "title": "Decarbonisation by sector", "archetype": "composition-flow", "component": "AnimatedBars", "keyFigures": ["electricity 28%", "aviation/shipping ~0%"], "sourceLines": "IEA", "interaction": "hover bars" },
+    { "id": "amazon-myth", "chapter": 6, "title": "Amazon 'lungs' myth", "archetype": "myth-buster", "component": "AmazonMyth", "keyFigures": ["net O2 ~ 0", "burn all biomass = 0.1% of O2"], "sourceLines": "6550-6609", "interaction": "toggle myth<->reality" },
+    { "id": "forecast-cards", "chapter": 7, "title": "Four confident forecasts", "archetype": "myth-buster", "component": "ForecastCards", "keyFigures": ["56M EVs by 2040", "EU net-zero 2050", "8.2 bn flyers 2037", "world ends 2030"], "sourceLines": "8130-8263", "interaction": "tap a card to reveal Smil's verdict" },
+    { "id": "forecast-spectrum", "chapter": 7, "title": "Apocalypse<->singularity spectrum", "archetype": "scale-comparator", "component": "ForecastSpectrum", "keyFigures": ["Smil in the middle"], "sourceLines": "8245-8252", "interaction": "drag your own marker" },
+    { "id": "pop-growth", "chapter": 7, "title": "Population growth rate", "archetype": "log-growth-timeline", "component": "LineChart", "keyFigures": ["peak 2.1% (1950s) -> 1.08% (2019)"], "sourceLines": "8130-8159", "interaction": "scrub the curve" }
+  ]
+}
