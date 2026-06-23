@@ -2,6 +2,8 @@ import ChapterShell from './ChapterShell';
 import { ChartFrame } from '../components/Primitives';
 import * as env from '../data/environment';
 import CO2Curve from '../viz/CO2Curve';
+import WarmingThermometer from '../viz/WarmingThermometer';
+import Energiewende from '../viz/Energiewende';
 import AnimatedBars from '../viz/AnimatedBars';
 import AmazonMyth from '../viz/AmazonMyth';
 
@@ -19,6 +21,8 @@ export default function Chapter6({ onNavigate }: { onNavigate: (n: number) => vo
       onNavigate={onNavigate}
     >
       <CO2Curve />
+
+      <WarmingThermometer />
 
       <ChartFrame
         title="Not all greenhouse gases are equal"
@@ -46,6 +50,8 @@ export default function Chapter6({ onNavigate }: { onNavigate: (n: number) => vo
           tag="Steel, cement, aviation, shipping: barely begun"
         />
       </ChartFrame>
+
+      <Energiewende />
 
       <ChartFrame
         title="Myth check: is the Amazon the planet's lungs?"
