@@ -1,8 +1,7 @@
 import { color, font } from '../theme/tokens';
 import { heroStats, chapterIndex } from '../data/overview';
-import { ChartFrame } from '../components/Primitives';
 import { useInView, useCountUp, formatCountValue } from '../viz/hooks';
-import ScaleExplorer from '../viz/ScaleExplorer';
+import ScaleZoom from '../viz/ScaleZoom';
 
 function HeroStat({ value, label, blurb }: { value: string; label: string; blurb: string }) {
   const { ref, inView } = useInView<HTMLDivElement>();
@@ -49,13 +48,7 @@ export default function Overview({ onNavigate }: { onNavigate: (n: number) => vo
       </div>
 
       {/* Interactive: orders of magnitude */}
-      <ChartFrame
-        title="Modern life spans a staggering range of scales"
-        subhead="The orders of magnitude separating the smallest and largest of things we routinely handle"
-        source="Source: Smil, How the World Really Works (2022), closing chapter"
-      >
-        <ScaleExplorer />
-      </ChartFrame>
+      <ScaleZoom />
 
       {/* Chapter index */}
       <div style={{ fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', fontWeight: 600, color: color.gray3, marginBottom: 16 }}>Seven Chapters</div>
