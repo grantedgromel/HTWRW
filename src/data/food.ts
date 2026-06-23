@@ -84,6 +84,33 @@ export const foods: FoodItem[] = [
   },
 ];
 
+// "Diesel on your plate" — single-food beaker selector. tbsp = tablespoons of
+// diesel embedded per portion (1 tbsp = 14.8 ml); fillPct drives the beaker.
+// Source: Smil ch.2 (bread/chicken/tomato/shrimp diesel-equivalents).
+export interface BeakerFood {
+  id: string;
+  chip: string;
+  name: string;
+  sub: string;
+  icon: FoodItem['icon'];
+  tbsp: number;
+  ml: string;
+  note: string;
+  fillPct: number;
+  over: boolean;
+}
+
+export const beakerFoods: BeakerFood[] = [
+  { id: 'sardines', chip: 'Sardines', name: 'Wild sardines', sub: 'per kilogram', icon: 'shrimp', tbsp: 7, ml: '100 ml', fillPct: 15, over: false, note: 'The low-carbon choice. Sardines and anchovies live near the surface and need only a small net and little diesel to catch.' },
+  { id: 'baguette', chip: 'Baguette', name: 'A baguette', sub: '250 g, standard', icon: 'bread', tbsp: 2, ml: '30 ml', fillPct: 6, over: false, note: 'Growing, milling and baking the wheat for one baguette embeds roughly two tablespoons of diesel.' },
+  { id: 'bread', chip: 'Sourdough', name: 'Sourdough loaf', sub: '1 kg', icon: 'bread', tbsp: 17, ml: '250 ml', fillPct: 38, over: false, note: 'Flour, water and salt — but the grain, milling and baking still add up to a full measuring cup of diesel.' },
+  { id: 'chicken', chip: 'Chicken', name: 'Roast chicken', sub: '1 kg edible meat', icon: 'chicken', tbsp: 22, ml: '325 ml', fillPct: 50, over: false, note: 'The most efficient meat there is, yet a whole roast chicken still embeds nearly half a wine bottle of crude oil.' },
+  { id: 'tomato', chip: 'Tomato', name: 'One greenhouse tomato', sub: '125 g, heated greenhouse', icon: 'tomato', tbsp: 6, ml: '650 ml/kg', fillPct: 65, over: false, note: "Smil's signature demonstration: a single medium tomato from a heated greenhouse embeds five to six tablespoons of diesel." },
+  { id: 'shrimp', chip: 'Shrimp', name: 'Two shrimp skewers', sub: '100 g, wild-caught', icon: 'shrimp', tbsp: 50, ml: '0.5–1 litre', fillPct: 100, over: true, note: 'Trawling for wild shrimp is the most fuel-hungry food on Earth: up to 10 litres of diesel per kilogram caught.' },
+];
+
+export const TBSP_ML = 14.8;
+
 // Feed-conversion ratios: units of feed per unit of live weight.
 // Source: Smil ch.2, lines ~2036–2038.
 export const feedConversion: { animal: string; ratio: number; note: string }[] = [

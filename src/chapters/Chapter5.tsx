@@ -17,13 +17,7 @@ export default function Chapter5({ onNavigate }: { onNavigate: (n: number) => vo
       insights={risks.insights}
       onNavigate={onNavigate}
     >
-      <ChartFrame
-        title="Every step right is ten times deadlier"
-        subhead="Fatalities per hour of exposure, log scale. Filter by category; hover any risk."
-        source="Source: Smil, How the World Really Works (2022), ch.5"
-      >
-        <RiskLadder />
-      </ChartFrame>
+      <RiskLadder />
 
       <ChartFrame
         title="We fear the dramatic and ignore the mundane"

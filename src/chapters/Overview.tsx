@@ -1,8 +1,7 @@
 import { color, font } from '../theme/tokens';
-import { heroStats, chapterIndex, perCapitaEnergy } from '../data/overview';
+import { heroStats, chapterIndex } from '../data/overview';
 import { ChartFrame } from '../components/Primitives';
 import { useInView, useCountUp, formatCountValue } from '../viz/hooks';
-import PhantomWorkers from '../viz/PhantomWorkers';
 import ScaleExplorer from '../viz/ScaleExplorer';
 
 function HeroStat({ value, label, blurb }: { value: string; label: string; blurb: string }) {
@@ -22,8 +21,6 @@ function HeroStat({ value, label, blurb }: { value: string; label: string; blurb
 }
 
 export default function Overview({ onNavigate }: { onNavigate: (n: number) => void }) {
-  const workerPoints = perCapitaEnergy.map((p) => ({ label: String(p.year), gj: p.gj }));
-
   return (
     <div style={{ animation: 'fadeUp .4s ease both' }}>
       {/* Hero */}
@@ -50,15 +47,6 @@ export default function Overview({ onNavigate }: { onNavigate: (n: number) => vo
           <HeroStat key={s.label} {...s} />
         ))}
       </div>
-
-      {/* Interactive: phantom workers across two centuries */}
-      <ChartFrame
-        title="Each of us now commands an invisible army of energy"
-        subhead="Per-capita energy expressed as adult-equivalent labourers working around the clock — drag through history"
-        source="Source: Smil, How the World Really Works (2022), ch.1 · 34 GJ ≈ 60 adult-equivalents"
-      >
-        <PhantomWorkers points={workerPoints} selector="slider" />
-      </ChartFrame>
 
       {/* Interactive: orders of magnitude */}
       <ChartFrame

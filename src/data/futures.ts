@@ -42,6 +42,34 @@ export const failedPredictions: { year: string; claim: string; reality: string }
   },
 ];
 
+// "Four confident forecasts" reveal cards. Source: Smil ch.7 (~8130–8263).
+export const forecastCards: { src: string; claim: string; verdict: string }[] = [
+  {
+    src: 'Industry projection',
+    claim: '“56 million electric cars on the road by 2040”',
+    verdict:
+      'A classic category-two forecast: directionally plausible, but the precise number is a guess. Material supply alone — lithium demand would need to rise 18–20-fold — makes the exact figure unknowable.',
+  },
+  {
+    src: 'Policy pledge',
+    claim: '“The EU will reach net-zero carbon by 2050”',
+    verdict:
+      'More than 100 nations have set net-zero targets for round-numbered years. Smil notes these are political declarations worked backward from a date, not engineering roadmaps grounded in real-world constraints.',
+  },
+  {
+    src: 'Aviation forecast',
+    claim: '“8.2 billion air travellers a year by 2037”',
+    verdict:
+      'Extrapolating a smooth curve decades out. No model in 2017 anticipated that a pandemic would erase years of air traffic almost overnight. The long-range number had a very brief shelf life.',
+  },
+  {
+    src: 'Catastrophist headline',
+    claim: '“The world will end by 2030 (or 2050)”',
+    verdict:
+      'Smil’s verdict on apocalyptic dating: examining the three existential necessities — breathing, drinking, eating — shows no unavoidable collapse by 2030 or 2050. Repetitive doom offers no practical guidance.',
+  },
+];
+
 // World population growth rate, % per year. Source: Smil ch.7, ~8130–8159.
 export const popGrowth: { year: number; pct: number }[] = [
   { year: 1770, pct: 0.5 },

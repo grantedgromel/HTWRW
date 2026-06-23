@@ -7,14 +7,15 @@ export const stats: Stat[] = [
 ];
 
 // Atmospheric CO₂, parts per million, over two centuries (the Keeling story).
+// `x` is a 0–100 position along the (non-linear) time axis used by the design.
 // Source: Smil ch.6, lines ~6905–6912, 7054–7060.
-export const co2ppm: { year: number; ppm: number; label?: string }[] = [
-  { year: 1800, ppm: 270, label: 'Pre-industrial' },
-  { year: 1900, ppm: 290 },
-  { year: 1958, ppm: 315, label: 'Mauna Loa begins' },
-  { year: 1985, ppm: 346 },
-  { year: 2000, ppm: 375 },
-  { year: 2020, ppm: 420, label: 'Above 420 ppm' },
+export const co2ppm: { year: number; ppm: number; x: number; note: string }[] = [
+  { year: 1750, ppm: 278, x: 0, note: 'Pre-industrial baseline, stable for millennia near 270 ppm.' },
+  { year: 1900, ppm: 295, x: 55, note: 'A century of coal lifts CO₂ only slightly, to about 295 ppm.' },
+  { year: 1958, ppm: 315, x: 77, note: 'Charles Keeling begins direct measurement at Mauna Loa: 315 ppm.' },
+  { year: 1985, ppm: 346, x: 87, note: 'The curve steepens as global fossil-fuel use accelerates.' },
+  { year: 2000, ppm: 370, x: 93, note: '370 ppm — and the annual rate of increase keeps climbing.' },
+  { year: 2020, ppm: 420, x: 100, note: 'Above 420 ppm: more than a 50% rise over the pre-industrial level.' },
 ];
 
 // Global-warming potential vs CO₂ over 100 years. Source: Smil ch.6, ~6919–6937.

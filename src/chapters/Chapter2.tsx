@@ -1,7 +1,7 @@
 import ChapterShell from './ChapterShell';
 import { ChartFrame } from '../components/Primitives';
 import * as food from '../data/food';
-import FoodDiesel from '../viz/FoodDiesel';
+import DieselBeaker from '../viz/DieselBeaker';
 import TomatoJourney from '../viz/TomatoJourney';
 import FeedRatio from '../viz/FeedRatio';
 
@@ -18,13 +18,7 @@ export default function Chapter2({ onNavigate }: { onNavigate: (n: number) => vo
       insights={food.insights}
       onNavigate={onNavigate}
     >
-      <ChartFrame
-        title="Every meal carries a hidden fossil-fuel price tag"
-        subhead="Diesel/crude embedded per kg. Click a food for the breakdown — then build a plate."
-        source="Source: Smil, How the World Really Works (2022), ch.2 · includes growing, processing, refrigeration, transport"
-      >
-        <FoodDiesel />
-      </ChartFrame>
+      <DieselBeaker />
 
       <ChartFrame
         title="A winter tomato's 3,745 km commute"

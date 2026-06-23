@@ -15,14 +15,13 @@ export const concentration: BarDatum[] = [
   { label: 'TSMC: advanced chips', value: 54 },
 ];
 
-// Container-ship capacity, in TEU (standard containers). Source: Smil ch.4,
-// lines ~4439–4443, 4754–4762.
-export const containerCapacity: { year: number; teu: number; ship: string }[] = [
-  { year: 1968, teu: 226, ship: 'Early cellular ships' },
-  { year: 1973, teu: 1968, ship: "McLean's converted fleet" },
-  { year: 1996, teu: 6000, ship: 'Regina Maersk' },
-  { year: 2008, teu: 13800, ship: 'Emma Maersk class' },
-  { year: 2019, teu: 23756, ship: 'MSC Gülsün' },
+// Container-ship eras for the size-slider. Source: Smil ch.4 (lines ~4439–4762).
+export const containerShips: { year: string; teu: number; name: string; desc: string }[] = [
+  { year: '1957', teu: 226, name: 'Gateway City', desc: "The world's first true container ship." },
+  { year: '1972', teu: 1968, name: "McLean's class", desc: 'Five times larger in just fifteen years.' },
+  { year: '1996', teu: 6000, name: 'Regina Maersk', desc: 'Containerisation goes truly global.' },
+  { year: '2008', teu: 13800, name: 'Emma Maersk era', desc: 'Ships outgrow the Panama Canal.' },
+  { year: '2019', teu: 23756, name: 'MSC Gülsün class', desc: 'A twelve-fold jump in capacity since 1973.' },
 ];
 
 // Moore's Law: transistors on a leading microprocessor. Log-scale.

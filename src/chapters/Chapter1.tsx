@@ -1,9 +1,9 @@
 import ChapterShell from './ChapterShell';
 import { ChartFrame } from '../components/Primitives';
 import * as energy from '../data/energy';
+import EnergyScrubber from '../viz/EnergyScrubber';
 import EnergyMixSlider from '../viz/EnergyMixSlider';
 import AnimatedBars from '../viz/AnimatedBars';
-import PhantomWorkers from '../viz/PhantomWorkers';
 
 export default function Chapter1({ onNavigate }: { onNavigate: (n: number) => void }) {
   return (
@@ -18,6 +18,8 @@ export default function Chapter1({ onNavigate }: { onNavigate: (n: number) => vo
       insights={energy.insights}
       onNavigate={onNavigate}
     >
+      <EnergyScrubber />
+
       <ChartFrame
         title="Two centuries of energy — and fossils only tightened their grip"
         subhead="Global primary energy supply by source, share of total. Drag through the years."
@@ -36,14 +38,6 @@ export default function Chapter1({ onNavigate }: { onNavigate: (n: number) => vo
           labelWidth={150}
           valueWidth={64}
         />
-      </ChartFrame>
-
-      <ChartFrame
-        title="How big is your energy army?"
-        subhead="Per-capita energy as adult-equivalent labourers — compare nations"
-        source="Source: Smil, ch.1 · 34 GJ ≈ 60 adult-equivalents"
-      >
-        <PhantomWorkers points={energy.countryEnergy.map((c) => ({ label: c.country, gj: c.gj }))} selector="buttons" initialIndex={0} />
       </ChartFrame>
     </ChapterShell>
   );

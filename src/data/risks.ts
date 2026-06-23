@@ -6,20 +6,42 @@ export const stats: Stat[] = [
   { value: '57,000×', label: 'Heart disease vs. terrorism', blurb: 'ratio of annual US deaths from heart disease versus terrorism.' },
 ];
 
-// Fatalities per hour of exposure — Smil's central device for comparing risks
-// honestly. Source: Smil ch.5, lines ~5712–6018.
-export const ladder: LadderRung[] = [
-  { label: 'Base jumping', perHour: 4e-2, detail: '1 death per ~2,300 jumps', group: 'extreme' },
-  { label: 'Skydiving', perHour: 5e-5, detail: '1 per ~250,000 jumps', group: 'extreme' },
-  { label: 'Medical error (in hospital)', perHour: 1.2e-6, detail: 'A leading cause of US deaths', group: 'everyday' },
-  { label: 'Driving', perHour: 5e-7, detail: '~40,000 US deaths a year', group: 'everyday' },
-  { label: 'Flying', perHour: 2.8e-8, detail: 'Adds just 3% to your hourly mortality', group: 'everyday' },
-  { label: 'Tornado', perHour: 3e-9, detail: 'Across 21 tornado-prone states', group: 'nature' },
-  { label: 'Earthquake (Japan)', perHour: 5e-10, detail: '1945–2020, incl. Tōhoku', group: 'nature' },
-  { label: 'Hurricane', perHour: 8e-11, detail: 'US coastal states', group: 'nature' },
-  { label: 'Terrorism (US)', perHour: 6e-11, detail: '1995–2017, incl. 9/11', group: 'fear' },
-  { label: 'Space debris', perHour: 1e-12, detail: 'Zero recorded deaths, ever', group: 'nature' },
+// Fatalities per person per hour of exposure (Starr method) — Smil's central
+// device for comparing risks honestly. `vol` = voluntary activity.
+// Source: Smil ch.5, lines ~5712–6018.
+export interface Risk {
+  name: string;
+  val: number;
+  vol: boolean;
+  plain: string;
+}
+
+export const riskList: Risk[] = [
+  { name: 'Base jumping', val: 4e-2, vol: true, plain: '1 death per 25 hours of jumping' },
+  { name: 'Hang gliding', val: 1e-3, vol: true, plain: '1 death per 1,000 hours aloft' },
+  { name: 'Skydiving', val: 5e-5, vol: true, plain: '1 death per 20,000 hours' },
+  { name: 'Being alive (baseline)', val: 1e-6, vol: false, plain: 'Average background mortality' },
+  { name: 'Driving a car (US)', val: 5e-7, vol: true, plain: '1 death per 2 million hours driven' },
+  { name: 'Downhill skiing', val: 2e-7, vol: true, plain: '1 death per 5 million hours' },
+  { name: 'Flying (commercial)', val: 2.8e-8, vol: true, plain: '1 death per 36 million hours aloft' },
+  { name: 'Terrorism, Afghanistan 2018', val: 2.3e-8, vol: false, plain: 'At its 2018 peak' },
+  { name: 'Terrorism, Iraq 2017', val: 1.3e-8, vol: false, plain: 'At its 2017 peak' },
+  { name: 'Terrorism, USA 1995–2017', val: 6e-11, vol: false, plain: 'Incl. September 11, 2001' },
 ];
+
+// How much each risk is feared/dreaded (1 = most feared) — the second ranking.
+export const fearRank: Record<string, number> = {
+  'Terrorism, USA 1995–2017': 1,
+  'Flying (commercial)': 2,
+  'Terrorism, Afghanistan 2018': 3,
+  'Terrorism, Iraq 2017': 4,
+  'Base jumping': 5,
+  'Skydiving': 6,
+  'Hang gliding': 7,
+  'Downhill skiing': 8,
+  'Driving a car (US)': 9,
+  'Being alive (baseline)': 10,
+};
 
 // What actually kills vs. what we fear, US deaths per million per year.
 // Source: Smil ch.5 + CDC/WHO (figures approximate, as the design cited).

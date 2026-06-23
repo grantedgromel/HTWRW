@@ -1,6 +1,7 @@
 import ChapterShell from './ChapterShell';
 import { ChartFrame } from '../components/Primitives';
 import * as g from '../data/globalization';
+import ContainerShip from '../viz/ContainerShip';
 import AnimatedBars from '../viz/AnimatedBars';
 import LineChart from '../viz/LineChart';
 
@@ -24,6 +25,8 @@ export default function Chapter4({ onNavigate }: { onNavigate: (n: number) => vo
       insights={g.insights}
       onNavigate={onNavigate}
     >
+      <ContainerShip />
+
       <ChartFrame
         title="The more concentrated production becomes, the more catastrophic the failure"
         subhead="Share of global production held by the single top supplier, selected goods. Hover for detail."
@@ -38,19 +41,6 @@ export default function Chapter4({ onNavigate }: { onNavigate: (n: number) => vo
       </ChartFrame>
 
       <ChartFrame
-        title="The box that built globalisation"
-        subhead="Container-ship capacity, standard containers (TEU). Toggle the scale."
-        source="Source: Smil, ch.4 — 226 boxes (1968) to 23,756 (2019)"
-      >
-        <LineChart
-          data={g.containerCapacity.map((d) => ({ x: d.year, y: d.teu, label: d.ship, note: `${d.teu.toLocaleString('en-US')} containers` }))}
-          yFormat={compact}
-          allowLogToggle
-          area
-        />
-      </ChartFrame>
-
-      <ChartFrame
         title="Moore's Law: 17 billion times more, in one lifetime"
         subhead="Transistors on a leading microprocessor — note the log scale"
         source="Source: Smil, ch.4 — Intel 4004 (1971) to AMD Epyc (2019)"
@@ -60,18 +50,6 @@ export default function Chapter4({ onNavigate }: { onNavigate: (n: number) => vo
           yFormat={compact}
           allowLogToggle
           defaultLog
-        />
-      </ChartFrame>
-
-      <ChartFrame
-        title="Four centuries of acceleration"
-        subhead="Top speed of long-distance trade, km/h"
-        source="Source: Smil, ch.4 — Dutch sail (4.7 km/h) to the jetliner (900 km/h)"
-      >
-        <AnimatedBars
-          items={g.tradeSpeed.map((d) => ({ label: `${d.era}`, value: d.kmh, display: `${d.kmh} km/h`, detail: d.mode }))}
-          labelWidth={90}
-          valueWidth={72}
         />
       </ChartFrame>
     </ChapterShell>

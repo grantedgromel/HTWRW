@@ -1,50 +1,74 @@
 import { color, font } from '../theme/tokens';
+import InteractiveCard from '../components/InteractiveCard';
 import { cementShock } from '../data/materials';
 import { useInView } from './hooks';
 
-/**
- * The book's single most arresting materials statistic: China poured roughly as
- * much cement in two years (2018–19) as the USA did across the whole 20th century.
- */
+function BlockBar({ width, accent, delay, inView }: { width: number; accent: string; delay: number; inView: boolean }) {
+  return (
+    <div style={{ flex: 1, height: 30, background: color.fill, overflow: 'hidden', position: 'relative' }}>
+      <div
+        style={{
+          position: 'absolute',
+          left: 0,
+          top: 0,
+          bottom: 0,
+          width: inView ? `${width}%` : '0%',
+          background: `repeating-linear-gradient(90deg, ${accent} 0, ${accent} 17px, ${color.bg} 17px, ${color.bg} 19px)`,
+          transition: `width 1.2s cubic-bezier(.4,0,.2,1) ${delay}s`,
+        }}
+      />
+    </div>
+  );
+}
+
+/** Ch3: China poured nearly as much cement in two years as the USA did in a century. */
 export default function CementShock() {
   const { ref, inView } = useInView<HTMLDivElement>();
-  const max = Math.max(cementShock.chinaGt, cementShock.usaGt);
-  const rows = [
-    { label: cementShock.usaLabel, gt: cementShock.usaGt, years: '100 years', muted: true },
-    { label: cementShock.chinaLabel, gt: cementShock.chinaGt, years: '2 years', muted: false },
-  ];
 
   return (
-    <div ref={ref}>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
-        {rows.map((r) => (
-          <div key={r.label}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 6 }}>
-              <span style={{ fontFamily: font.sans, fontSize: 13, fontWeight: 600, color: color.ink }}>{r.label}</span>
-              <span style={{ fontFamily: font.serif, fontSize: 12, fontStyle: 'italic', color: color.gray3 }}>over {r.years}</span>
+    <InteractiveCard
+      kicker="The scale that breaks intuition"
+      title="China used almost as much cement in two years as the USA did in a century"
+      subhead="Cement produced, billion tonnes. Each block is roughly 200 million tonnes."
+      source="Source: Smil, citing USGS cement statistics"
+      bodyPadding={false}
+    >
+      <div ref={ref} style={{ padding: 24 }}>
+        {/* China */}
+        <div style={{ marginBottom: 22 }}>
+          <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 7 }}>
+            <div style={{ fontSize: 13, fontWeight: 700, color: color.ink }}>
+              {cementShock.chinaLabel.split(',')[0]} <span style={{ fontWeight: 400, color: color.gray3, fontFamily: font.serif, fontStyle: 'italic' }}>2018–2019</span>
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-              <div style={{ flex: 1, height: 38, background: color.fill, overflow: 'hidden' }}>
-                <div
-                  style={{
-                    height: '100%',
-                    width: inView ? `${(r.gt / max) * 100}%` : '0%',
-                    background: r.muted ? color.gray3 : color.red,
-                    transition: 'width 1.2s cubic-bezier(.22,1,.36,1) .1s',
-                  }}
-                />
-              </div>
-              <div style={{ fontFamily: font.display, fontSize: 30, fontWeight: 700, width: 96, textAlign: 'right', color: r.muted ? color.gray2 : color.ink }}>
-                {r.gt} Gt
-              </div>
-            </div>
+            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#fff', background: color.red, padding: '3px 9px' }}>Just 2 years</div>
           </div>
-        ))}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+            <BlockBar width={96.5} accent={color.red} delay={0.2} inView={inView} />
+            <div style={{ fontFamily: font.display, fontSize: 26, fontWeight: 700, color: color.red, width: 96, textAlign: 'right' }}>{cementShock.chinaGt} Gt</div>
+          </div>
+        </div>
+        {/* USA */}
+        <div style={{ marginBottom: 22 }}>
+          <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 7 }}>
+            <div style={{ fontSize: 13, fontWeight: 700, color: color.ink }}>
+              United States <span style={{ fontWeight: 400, color: color.gray3, fontFamily: font.serif, fontStyle: 'italic' }}>1901–2000</span>
+            </div>
+            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: color.gray1, background: '#E7E2D9', padding: '3px 9px' }}>A whole century</div>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+            <BlockBar width={100} accent={color.gray1} delay={0.45} inView={inView} />
+            <div style={{ fontFamily: font.display, fontSize: 26, fontWeight: 700, color: color.gray1, width: 96, textAlign: 'right' }}>{cementShock.usaGt} Gt</div>
+          </div>
+        </div>
+
+        <div style={{ borderTop: `1px solid ${color.fill}`, paddingTop: 16, display: 'flex', alignItems: 'center', gap: 18 }}>
+          <div style={{ fontFamily: font.display, fontSize: 40, fontWeight: 700, color: color.ink, lineHeight: 1, flexShrink: 0 }}>50×</div>
+          <div style={{ fontFamily: font.serif, fontSize: 13, color: color.gray1, lineHeight: 1.65 }}>
+            China compressed a century of American construction into twenty-four months, at roughly fifty times the annual pace.
+            This is the scale at which the four pillars operate — and why "just switch the technology" is so much harder than it sounds.
+          </div>
+        </div>
       </div>
-      <div style={{ marginTop: 18, fontFamily: font.serif, fontSize: 14, color: color.ink, lineHeight: 1.7 }}>
-        Two years of Chinese construction ≈ <strong>a century of American construction.</strong> It is the clearest
-        illustration of why material demand, not policy, sets the pace of emissions.
-      </div>
-    </div>
+    </InteractiveCard>
   );
 }

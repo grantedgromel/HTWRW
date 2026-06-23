@@ -3,7 +3,7 @@ import { ChartFrame } from '../components/Primitives';
 import { color, font } from '../theme/tokens';
 import * as fut from '../data/futures';
 import ForecastSpectrum from '../viz/ForecastSpectrum';
-import FailedPredictions from '../viz/FailedPredictions';
+import ForecastCards from '../viz/ForecastCards';
 import LineChart from '../viz/LineChart';
 
 function FinalCTA({ onNavigate }: { onNavigate: (n: number) => void }) {
@@ -41,20 +41,14 @@ export default function Chapter7({ onNavigate }: { onNavigate: (n: number) => vo
       onNavigate={onNavigate}
       footer={<FinalCTA onNavigate={onNavigate} />}
     >
+      <ForecastCards />
+
       <ChartFrame
         title="Most forecasters sit at one of two wrong ends"
         subhead="Drag the marker to place yourself on the apocalypse-to-singularity spectrum"
         source="Source: Smil, How the World Really Works (2022), ch.7"
       >
         <ForecastSpectrum />
-      </ChartFrame>
-
-      <ChartFrame
-        title="A century of confident predictions, demolished"
-        subhead="Click each forecast to see what actually happened"
-        source="Source: Smil, ch.7"
-      >
-        <FailedPredictions />
       </ChartFrame>
 
       <ChartFrame

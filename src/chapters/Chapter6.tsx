@@ -1,7 +1,7 @@
 import ChapterShell from './ChapterShell';
 import { ChartFrame } from '../components/Primitives';
 import * as env from '../data/environment';
-import LineChart from '../viz/LineChart';
+import CO2Curve from '../viz/CO2Curve';
 import AnimatedBars from '../viz/AnimatedBars';
 import AmazonMyth from '../viz/AmazonMyth';
 
@@ -18,19 +18,7 @@ export default function Chapter6({ onNavigate }: { onNavigate: (n: number) => vo
       insights={env.insights}
       onNavigate={onNavigate}
     >
-      <ChartFrame
-        title="The Keeling story: CO₂ over two centuries"
-        subhead="Atmospheric CO₂, parts per million. Drag across the curve to read any year."
-        source="Source: Smil, ch.6 — from ~270 ppm (pre-industrial) to above 420 ppm"
-      >
-        <LineChart
-          data={env.co2ppm.map((d) => ({ x: d.year, y: d.ppm, label: d.label, note: `${d.ppm} ppm` }))}
-          yFormat={(v) => String(Math.round(v))}
-          unit=" ppm"
-          area
-          scrub
-        />
-      </ChartFrame>
+      <CO2Curve />
 
       <ChartFrame
         title="Not all greenhouse gases are equal"

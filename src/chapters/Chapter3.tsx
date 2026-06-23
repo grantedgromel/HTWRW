@@ -26,13 +26,7 @@ export default function Chapter3({ onNavigate }: { onNavigate: (n: number) => vo
         <MaterialPillars />
       </ChartFrame>
 
-      <ChartFrame
-        title="China's two years vs. America's whole century"
-        subhead="Cement produced — the scale that makes targets so hard"
-        source="Source: Smil, ch.3 — China poured ~4.4 Gt of cement in 2018–2019"
-      >
-        <CementShock />
-      </ChartFrame>
+      <CementShock />
 
       <ChartFrame
         title="Nothing matches steel"

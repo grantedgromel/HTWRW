@@ -84,6 +84,44 @@ export const countryEnergy: { country: string; gj: number }[] = [
   { country: 'Poorest nations', gj: 5 },
 ];
 
+// Useful energy GJ/capita anchor points for the continuous 1800→2020 scrubber.
+// Source: Smil ch.1 (lines ~598–614).
+export const energyAnchors: [number, number][] = [
+  [1800, 0.05],
+  [1850, 0.3],
+  [1900, 2.7],
+  [1950, 10],
+  [2000, 28],
+  [2020, 34],
+];
+
+export function energyAt(year: number): number {
+  const pts = energyAnchors;
+  if (year <= pts[0][0]) return pts[0][1];
+  if (year >= pts[pts.length - 1][0]) return pts[pts.length - 1][1];
+  for (let i = 0; i < pts.length - 1; i++) {
+    const [y0, v0] = pts[i];
+    const [y1, v1] = pts[i + 1];
+    if (year >= y0 && year <= y1) {
+      const t = (year - y0) / (y1 - y0);
+      return v0 + (v1 - v0) * t;
+    }
+  }
+  return 34;
+}
+
+export function energyEra(year: number): string {
+  return year < 1850
+    ? 'Pre-industrial'
+    : year < 1900
+      ? 'Early industrial'
+      : year < 1950
+        ? 'Age of coal'
+        : year < 2000
+          ? 'Age of oil'
+          : 'Today';
+}
+
 export const quote = {
   text: 'An average inhabitant of Earth nowadays has at their disposal nearly 700 times more useful energy than their ancestors had at the beginning of the 19th century.',
   cite: 'Vaclav Smil, Chapter 1',
