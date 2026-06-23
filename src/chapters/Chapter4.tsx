@@ -2,7 +2,7 @@ import ChapterShell from './ChapterShell';
 import { ChartFrame } from '../components/Primitives';
 import * as g from '../data/globalization';
 import ContainerShip from '../viz/ContainerShip';
-import AnimatedBars from '../viz/AnimatedBars';
+import SupplyMap from '../viz/SupplyMap';
 import LineChart from '../viz/LineChart';
 
 const compact = (n: number): string => {
@@ -27,18 +27,7 @@ export default function Chapter4({ onNavigate }: { onNavigate: (n: number) => vo
     >
       <ContainerShip />
 
-      <ChartFrame
-        title="The more concentrated production becomes, the more catastrophic the failure"
-        subhead="Share of global production held by the single top supplier, selected goods. Hover for detail."
-        source="Sources: various trade bodies & Smil analysis"
-      >
-        <AnimatedBars
-          items={g.concentration.map((d) => ({ label: d.label, value: d.value, display: `${d.value}%`, muted: d.muted, detail: 'Concentration is efficiency and fragility at once.' }))}
-          max={100}
-          labelWidth={140}
-          valueWidth={40}
-        />
-      </ChartFrame>
+      <SupplyMap />
 
       <ChartFrame
         title="Moore's Law: 17 billion times more, in one lifetime"
