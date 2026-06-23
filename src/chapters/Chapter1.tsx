@@ -40,6 +40,7 @@ export default function Chapter1({ onNavigate }: { onNavigate: (n: number) => vo
           items={energy.energyDensity.map((d) => ({ label: d.fuel, value: d.gjPerTonne, detail: d.note, display: `${d.gjPerTonne} GJ/t` }))}
           labelWidth={150}
           valueWidth={64}
+          tag="Diesel packs ~3× the energy of dry wood"
         />
       </ChartFrame>
     </ChapterShell>

@@ -3,6 +3,7 @@ import { ChartFrame } from '../components/Primitives';
 import * as g from '../data/globalization';
 import ContainerShip from '../viz/ContainerShip';
 import SupplyMap from '../viz/SupplyMap';
+import EniacChip from '../viz/EniacChip';
 import LineChart from '../viz/LineChart';
 
 const compact = (n: number): string => {
@@ -39,8 +40,11 @@ export default function Chapter4({ onNavigate }: { onNavigate: (n: number) => vo
           yFormat={compact}
           allowLogToggle
           defaultLog
+          annotation="17 billion× more transistors in one lifetime"
         />
       </ChartFrame>
+
+      <EniacChip />
     </ChapterShell>
   );
 }

@@ -3,6 +3,7 @@ import { ChartFrame } from '../components/Primitives';
 import * as food from '../data/food';
 import DieselBeaker from '../viz/DieselBeaker';
 import EuropeFoodMap from '../viz/EuropeFoodMap';
+import DistanceEquivalent from '../viz/DistanceEquivalent';
 import FeedRatio from '../viz/FeedRatio';
 
 export default function Chapter2({ onNavigate }: { onNavigate: (n: number) => void }) {
@@ -21,6 +22,8 @@ export default function Chapter2({ onNavigate }: { onNavigate: (n: number) => vo
       <DieselBeaker />
 
       <EuropeFoodMap />
+
+      <DistanceEquivalent />
 
       <ChartFrame
         title="Climbing the food chain wastes energy fast"

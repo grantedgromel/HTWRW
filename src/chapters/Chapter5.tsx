@@ -42,6 +42,7 @@ export default function Chapter5({ onNavigate }: { onNavigate: (n: number) => vo
           max={80}
           labelWidth={100}
           valueWidth={56}
+          tag="Americans eat ~70% more sugar than the Japanese"
         />
       </ChartFrame>
     </ChapterShell>
