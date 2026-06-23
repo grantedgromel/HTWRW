@@ -194,3 +194,28 @@ input[type='range'].econ:focus-visible {
     grid-template-columns: 1fr !important;
   }
 }
+
+/* Interactive-card internal layouts collapse to a single column on small screens. */
+@media (max-width: 680px) {
+  .es-grid,
+  .beaker-grid,
+  .forecast-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .es-grid > div,
+  .beaker-grid > div {
+    border-right: none !important;
+  }
+}
+
+/* Economist-style red "tag" annotation pill. */
+.tag {
+  display: inline-block;
+  background: var(--red);
+  color: #fff;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 3px 9px;
+}
