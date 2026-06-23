@@ -2,7 +2,7 @@ import ChapterShell from './ChapterShell';
 import { ChartFrame } from '../components/Primitives';
 import * as food from '../data/food';
 import DieselBeaker from '../viz/DieselBeaker';
-import TomatoJourney from '../viz/TomatoJourney';
+import EuropeFoodMap from '../viz/EuropeFoodMap';
 import FeedRatio from '../viz/FeedRatio';
 
 export default function Chapter2({ onNavigate }: { onNavigate: (n: number) => void }) {
@@ -20,13 +20,7 @@ export default function Chapter2({ onNavigate }: { onNavigate: (n: number) => vo
     >
       <DieselBeaker />
 
-      <ChartFrame
-        title="A winter tomato's 3,745 km commute"
-        subhead="Scrub the truck from Almería to Stockholm and watch the diesel accumulate"
-        source="Source: Smil, ch.2 — 1,120 L of diesel for a 13-tonne load"
-      >
-        <TomatoJourney />
-      </ChartFrame>
+      <EuropeFoodMap />
 
       <ChartFrame
         title="Climbing the food chain wastes energy fast"
