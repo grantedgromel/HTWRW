@@ -39,6 +39,7 @@ export default function LineChart({
   scrub = false,
   unit = '',
   accent = color.red,
+  annotation,
 }: {
   data: LinePoint[];
   yFormat?: (v: number) => string;
@@ -49,6 +50,7 @@ export default function LineChart({
   scrub?: boolean;
   unit?: string;
   accent?: string;
+  annotation?: string;
 }) {
   const { ref, inView } = useInView<HTMLDivElement>();
   const svgRef = useRef<SVGSVGElement>(null);
@@ -91,6 +93,11 @@ export default function LineChart({
 
   return (
     <div ref={ref}>
+      {annotation && (
+        <div style={{ marginBottom: 12 }}>
+          <span className="tag">{annotation}</span>
+        </div>
+      )}
       {allowLogToggle && (
         <div style={{ display: 'flex', gap: 6, marginBottom: 12 }}>
           {[

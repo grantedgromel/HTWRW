@@ -40,6 +40,7 @@ export default function Chapter4({ onNavigate }: { onNavigate: (n: number) => vo
           yFormat={compact}
           allowLogToggle
           defaultLog
+          annotation="17 billion× more transistors in one lifetime"
         />
       </ChartFrame>
 
