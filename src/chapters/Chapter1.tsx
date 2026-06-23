@@ -2,6 +2,7 @@ import ChapterShell from './ChapterShell';
 import { ChartFrame } from '../components/Primitives';
 import * as energy from '../data/energy';
 import EnergyScrubber from '../viz/EnergyScrubber';
+import EnergyMap from '../viz/EnergyMap';
 import EnergyMixSlider from '../viz/EnergyMixSlider';
 import AnimatedBars from '../viz/AnimatedBars';
 
@@ -19,6 +20,8 @@ export default function Chapter1({ onNavigate }: { onNavigate: (n: number) => vo
       onNavigate={onNavigate}
     >
       <EnergyScrubber />
+
+      <EnergyMap />
 
       <ChartFrame
         title="Two centuries of energy — and fossils only tightened their grip"

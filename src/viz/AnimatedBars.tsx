@@ -22,12 +22,14 @@ export default function AnimatedBars({
   labelWidth = 120,
   valueWidth = 64,
   unitSuffix = '',
+  tag,
 }: {
   items: BarItem[];
   max?: number;
   labelWidth?: number;
   valueWidth?: number;
   unitSuffix?: string;
+  tag?: string;
 }) {
   const { ref, inView } = useInView<HTMLDivElement>();
   const [hover, setHover] = useState<number | null>(null);
@@ -35,6 +37,11 @@ export default function AnimatedBars({
 
   return (
     <div ref={ref}>
+      {tag && (
+        <div style={{ marginBottom: 12 }}>
+          <span className="tag">{tag}</span>
+        </div>
+      )}
       <div style={{ display: 'flex', flexDirection: 'column', gap: 7 }}>
         {items.map((d, i) => {
           const pct = top > 0 ? (d.value / top) * 100 : 0;

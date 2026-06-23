@@ -29,6 +29,7 @@ export default function Chapter6({ onNavigate }: { onNavigate: (n: number) => vo
           items={env.ghgPotency.map((d) => ({ label: d.gas, value: d.multiplier, display: `${d.multiplier}×`, detail: d.note }))}
           labelWidth={150}
           valueWidth={56}
+          tag="Nitrous oxide ≈ 280× CO₂, tonne for tonne"
         />
       </ChartFrame>
 
@@ -42,6 +43,7 @@ export default function Chapter6({ onNavigate }: { onNavigate: (n: number) => vo
           max={100}
           labelWidth={120}
           valueWidth={48}
+          tag="Steel, cement, aviation, shipping: barely begun"
         />
       </ChartFrame>
 

@@ -28,6 +28,7 @@ export default function Chapter5({ onNavigate }: { onNavigate: (n: number) => vo
           items={risks.mortality.data.map((d) => ({ label: d.label, value: d.value, display: d.display, muted: d.muted, detail: d.muted ? 'A risk we obsess over' : 'A leading cause of death' }))}
           labelWidth={110}
           valueWidth={64}
+          tag="Heart disease kills ~57,000× more than terrorism"
         />
       </ChartFrame>
 
