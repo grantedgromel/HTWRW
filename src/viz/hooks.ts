@@ -33,7 +33,7 @@ export function useInView<T extends HTMLElement = HTMLDivElement>(
   return { ref, inView };
 }
 
-const prefersReducedMotion = () =>
+export const prefersReducedMotion = () =>
   typeof window !== 'undefined' &&
   window.matchMedia &&
   window.matchMedia('(prefers-reduced-motion: reduce)').matches;

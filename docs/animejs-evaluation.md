@@ -11,15 +11,34 @@
 
 ---
 
+## Status — implemented on this branch
+
+The Tier-1 plan was executed and verified (typecheck + production build + a Playwright
+smoke test of the reorder). What actually shipped, and one correction to the original
+analysis:
+
+- ✅ **Removed `framer-motion`** (was imported nowhere).
+- ✅ **`CO2Curve` fixed *natively*** with `pathLength={1}` — **no library needed**. See the
+  correction below: the robust line-draw pattern already lived in `LineChart`.
+- ✅ **Added `animejs@^4` and used it for `RiskLadder`'s reorder** (FLIP) — the one component
+  where a library genuinely earns its place. Reduced-motion–gated; verified the rows reorder
+  with no runtime errors.
+- ↩️ **Correction:** `LineChart` was listed below as a conversion target. **It is not** — it
+  already draws its line the correct, robust way (`pathLength={1}`, `LineChart.tsx:164`). No
+  change made. That same pattern is what now fixes `CO2Curve`.
+
+So anime.js is included for **one** thing (the reorder). If that one use doesn't justify the
+dependency for you, reverting is a single commit — the line-draw fixes don't depend on it.
+
+---
+
 ## TL;DR
 
-1. **`framer-motion` is dead weight.** It's a dependency in `package.json` but is **imported in zero files**. Either delete it or actually use it. (Quick win, independent of anime.js.)
+1. **`framer-motion` was dead weight.** A dependency in `package.json` imported in **zero files**. Removed.
 2. **anime.js is a good fit, but narrowly.** It's **MIT-licensed**, framework-agnostic, tree-shakes well, and is *best-in-class at exactly the things this app does by hand*: SVG line-drawing, shape morphing, motion-along-a-path, and grid/center staggers. Adopt it **surgically**, not wholesale.
-3. **Three clear wins** justify pulling it in: `CO2Curve`, `LineChart` (line-draw, replacing a fragile magic number), and `RiskLadder` (the reorder that's promised in the catalog but currently *teleports*).
+3. **The genuinely library-worthy win is `RiskLadder`'s reorder** — promised in the catalog ("watch them reorder") but currently *teleporting*. Pure CSS can't animate a data-driven reorder; this is the case for anime.js (FLIP). The line-draws (`CO2Curve`, `LineChart`) are better done natively with `pathLength={1}`.
 4. **Most components should stay as-is.** Slider-driven viz (`EnergyScrubber`, `ContainerShip`, `EnergyMixSlider`) and the count-up hook are already correct and cheap — anime.js would add a dependency for no gain.
-5. **Two net-new "delight" ideas** worth a look if we want the Instagram-reel energy: a **dot traveling the curve as it draws** (`svg.createMotionPath`) and **scroll-scrubbed** chart reveals (`onScroll({ sync })`) for a scrollytelling feel.
-
-**Recommended first move at 9:30:** approve the three Tier-1 conversions, and I'll prototype `CO2Curve` end-to-end so you can see the win live before we commit to the rest.
+5. **Two net-new "delight" ideas** worth a look if we want the Instagram-reel energy: a **dot traveling the curve as it draws** (`svg.createMotionPath`) and **scroll-scrubbed** chart reveals (`onScroll({ sync })`) for a scrollytelling feel. **Not yet built** — these depend on your tone call + the reel.
 
 ---
 
@@ -66,15 +85,17 @@ Verified from `animejs@4.5.0` source. Full catalog in the appendix; the relevant
 
 Scored **Impact** (visual/UX gain) × **Effort** (to convert) → **Call**. Sorted by priority.
 
-### Tier 1 — adopt (worth including)
+### Tier 1 — done (worth including)
 
-| Component | What changes | Impact | Effort | Call |
-|---|---|---|---|---|
-| **`CO2Curve`** | Replace hand-rolled `strokeDasharray={900}` + CSS transition with `svg.createDrawable` (auto length). Fixes a latent bug: the `900` is wrong for the actual path and breaks if the data/viewBox changes. | High | Low | **Adopt** |
-| **`LineChart`** (Moore's Law, population growth) | Same `createDrawable` line-draw on entry; optional log/linear *morph* via `morphTo`. The flagship growth-curve component — biggest single payoff. | High | Med | **Adopt** |
-| **`RiskLadder`** | Rows currently **teleport** when you toggle fear↔danger — only bar *widths* transition, positions snap. The catalog literally promises "watch them reorder." Animate the reorder (FLIP via `createLayout`, or measure-and-`animate` the `y` deltas). | High | Med | **Adopt** |
+| Component | What changed | Library? | Status |
+|---|---|---|---|
+| **`CO2Curve`** | Replaced the hardcoded `strokeDasharray={900}` magic number with `pathLength={1}` + normalized dash — the path length is now self-describing and can't drift from the data/viewBox. | **No** — native SVG | ✅ shipped |
+| **`RiskLadder`** | Rows used to **teleport** on the fear↔danger toggle (only bar *widths* transitioned). Now a FLIP animation slides each row from its old slot to its new one. Reduced-motion–gated; synchronous "invert" so there's no first-frame flash. | **Yes** — `animate()` | ✅ shipped |
+| **`LineChart`** (Moore's Law, population) | *Already correct* — uses `pathLength={1}` line-draw (`LineChart.tsx:164`). Originally mis-listed here as a target. | — | ⏹️ no change |
 
-> These three are the answer to "which ones are worth including." The first fixes a real fragility; the other two deliver motion the design *already promised* but doesn't render.
+> The reorder is the real "worth including" answer — it delivers motion the design *already
+> promised*. The `CO2Curve` fix is a robustness win that, on closer reading, didn't need a
+> library at all (the codebase already had the right native pattern).
 
 ### Tier 2 — maybe (only if we're already touching the file)
 

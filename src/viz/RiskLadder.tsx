@@ -1,7 +1,9 @@
-import { useState } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
+import { animate } from 'animejs';
 import { color, font } from '../theme/tokens';
 import InteractiveCard from '../components/InteractiveCard';
 import { riskList, fearRank } from '../data/risks';
+import { prefersReducedMotion } from './hooks';
 
 const LMIN = Math.log10(6e-11);
 const LMAX = Math.log10(4e-2);
@@ -22,6 +24,29 @@ export default function RiskLadder() {
   const ordered = [...riskList].sort((a, b) =>
     mode === 'danger' ? b.val - a.val : fearRank[a.name] - fearRank[b.name],
   );
+
+  // FLIP reorder: when the ranking flips, animate each row from where it *was*
+  // to where it now is, instead of letting the rows teleport. Positions are
+  // measured relative to the list container so page-scroll can't skew the delta.
+  const listRef = useRef<HTMLDivElement>(null);
+  const rowRefs = useRef(new Map<string, HTMLDivElement>());
+  const prevTops = useRef(new Map<string, number>());
+
+  useLayoutEffect(() => {
+    const reduce = prefersReducedMotion();
+    const base = listRef.current?.getBoundingClientRect().top ?? 0;
+    rowRefs.current.forEach((el, name) => {
+      const top = el.getBoundingClientRect().top - base;
+      const prev = prevTops.current.get(name);
+      prevTops.current.set(name, top);
+      if (reduce || prev == null) return;
+      const delta = prev - top;
+      if (Math.abs(delta) < 0.5) return;
+      // Invert synchronously (pre-paint) so there's no flash, then play to rest.
+      el.style.transform = `translateY(${delta}px)`;
+      animate(el, { translateY: [delta, 0], duration: 500, ease: 'out(3)' });
+    });
+  }, [mode]);
 
   const toggle = (m: 'danger' | 'fear', label: string) => (
     <button
@@ -59,12 +84,19 @@ export default function RiskLadder() {
         </div>
       </div>
 
-      <div style={{ padding: '18px 24px', borderTop: `1px solid ${color.fill}`, marginTop: 14, display: 'flex', flexDirection: 'column', gap: 9 }}>
+      <div ref={listRef} style={{ padding: '18px 24px', borderTop: `1px solid ${color.fill}`, marginTop: 14, display: 'flex', flexDirection: 'column', gap: 9 }}>
         {ordered.map((r) => {
           const width = 4 + ((Math.log10(r.val) - LMIN) / (LMAX - LMIN)) * 96;
           const c = r.vol ? color.ink : color.red;
           return (
-            <div key={r.name} style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+            <div
+              key={r.name}
+              ref={(el) => {
+                if (el) rowRefs.current.set(r.name, el);
+                else rowRefs.current.delete(r.name);
+              }}
+              style={{ display: 'flex', alignItems: 'center', gap: 12 }}
+            >
               <div style={{ width: 158, flexShrink: 0, textAlign: 'right' }}>
                 <div style={{ fontSize: 11, fontWeight: 600, color: color.ink, lineHeight: 1.25 }}>{r.name}</div>
                 <div style={{ fontSize: 9, color: '#A09A8E', fontFamily: font.serif, fontStyle: 'italic' }}>{r.vol ? 'Voluntary' : 'Dreaded / involuntary'}</div>
