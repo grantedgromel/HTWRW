@@ -41,9 +41,12 @@ export default function CO2Curve() {
             strokeWidth={3}
             strokeLinejoin="round"
             strokeLinecap="round"
-            strokeDasharray={900}
-            strokeDashoffset={inView ? 0 : 900}
-            style={{ transition: 'stroke-dashoffset 2s cubic-bezier(.5,0,.2,1)' }}
+            pathLength={1}
+            style={{
+              strokeDasharray: 1,
+              strokeDashoffset: inView ? 0 : 1,
+              transition: 'stroke-dashoffset 2s cubic-bezier(.5,0,.2,1)',
+            }}
           />
           {co2ppm.map((p, i) => {
             const on = i === sel;
