@@ -23,6 +23,11 @@ analysis:
 - ✅ **Added `animejs@^4` and used it for `RiskLadder`'s reorder** (FLIP) — the one component
   where a library genuinely earns its place. Reduced-motion–gated; verified the rows reorder
   with no runtime errors.
+- ✅ **`CO2Curve` marker-on-the-curve** (one of the two "delight" ideas below) — a dot rides the
+  line's growing tip as it draws, using `svg.createMotionPath` with the same 2000ms/cubic-bezier
+  timing as the stroke-draw so it stays on the tip, then fades out at the final point. Behind a
+  `SHOW_CURVE_MARKER` flag, reduced-motion–gated. Browser-verified (travels left→right, no errors).
+  This is a *prototype for your eye* — easy to flip off if it's too much motion for the tone.
 - ↩️ **Correction:** `LineChart` was listed below as a conversion target. **It is not** — it
   already draws its line the correct, robust way (`pathLength={1}`, `LineChart.tsx:164`). No
   change made. That same pattern is what now fixes `CO2Curve`.
@@ -120,7 +125,7 @@ Scored **Impact** (visual/UX gain) × **Effort** (to convert) → **Call**. Sort
 
 These don't map to an existing weakness; they're the "is there something here worth *adding*" answer. Hold for a design call.
 
-1. **Marker rides the curve.** As `CO2Curve` / `LineChart` draws in, send a small dot along the path with `svg.createMotionPath` so the eye follows the line being drawn. Cheap, high charm, very "data-journalism motion."
+1. **Marker rides the curve.** ✅ *Prototyped on `CO2Curve`* (see Status above). As the line draws in, a small dot rides the path tip via `svg.createMotionPath`. Cheap, high charm, very "data-journalism motion." Could extend to `LineChart` (Moore's Law / population) if you like it here.
 2. **Scroll-scrubbed reveals.** Swap fire-once `useInView` triggers for `onScroll({ sync })` on the flagship charts so the curve *draws as you scroll* and reverses when you scroll back. This is the scrollytelling idiom (NYT/Pudding/Economist interactives). Bigger change, biggest "feel" upgrade — worth a prototype to judge whether it fits the calm Economist tone or fights it.
 
 ---

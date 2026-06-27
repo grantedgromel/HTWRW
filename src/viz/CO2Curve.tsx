@@ -1,11 +1,17 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { animate, svg, cubicBezier } from 'animejs';
 import { color, font } from '../theme/tokens';
 import InteractiveCard from '../components/InteractiveCard';
 import { co2ppm } from '../data/environment';
-import { useInView } from './hooks';
+import { useInView, prefersReducedMotion } from './hooks';
 
 const cxOf = (x: number) => 40 + x * 8.2;
 const cyOf = (ppm: number) => 250 - (ppm - 270) * 1.05;
+
+// A small marker that rides the curve's growing tip as the line draws in.
+// Flip to false to drop the effect entirely (line-draw is unaffected either way).
+const SHOW_CURVE_MARKER = true;
+const DRAW_MS = 2000;
 
 /** Ch6 flagship: two centuries of CO₂ in one line; tap a milestone to read it. */
 export default function CO2Curve() {
@@ -13,6 +19,25 @@ export default function CO2Curve() {
   const [sel, setSel] = useState(co2ppm.length - 1);
   const cur = co2ppm[sel];
   const path = co2ppm.map((p, i) => `${i === 0 ? 'M' : 'L'}${cxOf(p.x).toFixed(1)} ${cyOf(p.ppm).toFixed(1)}`).join(' ');
+
+  const lineRef = useRef<SVGPathElement>(null);
+  const markerRef = useRef<SVGCircleElement>(null);
+  const x0 = cxOf(co2ppm[0].x);
+  const y0 = cyOf(co2ppm[0].ppm);
+
+  useEffect(() => {
+    const el = markerRef.current;
+    const line = lineRef.current;
+    if (!SHOW_CURVE_MARKER || !inView || !el || !line || prefersReducedMotion()) return;
+    const { translateX, translateY } = svg.createMotionPath(line);
+    // Same easing as the stroke-draw transition below, so the dot stays on the tip.
+    const move = animate(el, { translateX, translateY, duration: DRAW_MS, ease: cubicBezier(0.5, 0, 0.2, 1) });
+    const fade = animate(el, { opacity: [0, 1, 1, 0], duration: DRAW_MS, ease: 'linear' });
+    return () => {
+      move.revert();
+      fade.revert();
+    };
+  }, [inView]);
 
   return (
     <InteractiveCard
@@ -35,6 +60,7 @@ export default function CO2Curve() {
             <text x="0" y="127">400</text>
           </g>
           <path
+            ref={lineRef}
             d={path}
             fill="none"
             stroke={color.red}
@@ -48,6 +74,16 @@ export default function CO2Curve() {
               transition: 'stroke-dashoffset 2s cubic-bezier(.5,0,.2,1)',
             }}
           />
+          {SHOW_CURVE_MARKER && (
+            <circle
+              ref={markerRef}
+              r={5}
+              fill={color.red}
+              stroke="#fff"
+              strokeWidth={2}
+              style={{ opacity: 0, transform: `translate(${x0}px, ${y0}px)` }}
+            />
+          )}
           {co2ppm.map((p, i) => {
             const on = i === sel;
             return (
